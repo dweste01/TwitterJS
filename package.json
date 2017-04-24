@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/dweste01/TwitterJS/issues"
   },
-  "homepage": "https://github.com/dweste01/TwitterJS#readme"
+  "homepage": "https://github.com/dweste01/TwitterJS#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
