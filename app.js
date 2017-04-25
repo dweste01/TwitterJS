@@ -7,12 +7,13 @@ const nunjucks = require('nunjucks');
 const routes = require('./routes');
 
 const app = express();
-
+app.use(volleyball);
+app.use(express.static('public'));
 /** Rendering View **/
 app.set('view engine', 'html'); // have res.render work with html files
 app.engine('html', nunjucks.render); // when giving html files to res.render, tell it to use nunjucks
 nunjucks.configure('views', { noCache: true });
-app.use(volleyball);
+
 
 var locals = {
     title: 'An Example',
