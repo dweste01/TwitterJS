@@ -1,9 +1,31 @@
 const http = require("http");
-
 const express = require('express');
-const volleyball = require('volleyball')
 const app = express();
 const router = express.Router();
+
+const volleyball = require('volleyball')
+
+const nunjucks = require('nunjucks')
+app.set('view engine', 'html'); // have res.render work with html files
+app.engine('html', nunjucks.render); // when giving html files to res.render, tell it to use nunjucks
+nunjucks.configure('views', { noCache: true });
+
+
+
+
+var locals = {
+    title: 'An Example',
+    people: [
+        { name: 'Gandalf'},
+        { name: 'Frodo' },
+        { name: 'Hermione'}
+    ]
+};
+
+nunjucks.render('index.html',locals,function(err,output){
+	if(err)throw err;
+	console.log(output);
+});
 
 
 app.use(volleyball);
@@ -17,7 +39,9 @@ app.listen(3000, function() {
 router.get('/', function(req, res, next) {
 	//console.log(req);
 	console.log(req.method, req.originalUrl, res.statusCode);
-	res.send("Welcome to twitter");
+	res.render( 'index.html', locals);
+
+	// res.send("Welcome to twitter");
 	next();
 })
 
