@@ -1,18 +1,18 @@
+/** modules to require **/
 const http = require("http");
 const express = require('express');
-const app = express();
-const router = express.Router();
 const tweetBank = require('./tweetBank');
+const volleyball = require('volleyball');
+const nunjucks = require('nunjucks');
+const routes = require('./routes');
 
-const volleyball = require('volleyball')
+const app = express();
 
-const nunjucks = require('nunjucks')
+/** Rendering View **/
 app.set('view engine', 'html'); // have res.render work with html files
 app.engine('html', nunjucks.render); // when giving html files to res.render, tell it to use nunjucks
 nunjucks.configure('views', { noCache: true });
-
-
-
+app.use(volleyball);
 
 var locals = {
     title: 'An Example',
@@ -23,32 +23,35 @@ var locals = {
     ]
 };
 
+var specialLocals = {
+    title: 'A Special Example',
+    people: [
+        { name: 'Super Gandalf'},
+        { name: 'Amazing Frodo' },
+        { name: 'Heroic Hermione'}
+    ]
+};
+
 nunjucks.render('index.html',locals,function(err,output){
 	if(err)throw err;
 	console.log(output);
 });
 
 
-app.use(volleyball);
-// var server = http.createServer(app);
-
+/** Request/Response handling **/
 app.listen(3000, function() {
 	console.log('listening!');
-
 });
 
-router.get('/', function(req, res, next) {
-	//console.log(req);
-	console.log(req.method, req.originalUrl, res.statusCode);
-	res.render( 'index.html', locals);
+// app.get('/', function(req, res, next) {
+// 	res.render( 'index.html', locals);
+// })
 
-	// res.send("Welcome to twitter");
-	next();
-})
+// // has to be exact match on '/special/'
+// app.get('/special/', function(req, res, next) {
+// 	res.render( 'index.html', specialLocals);
+// })
 
-router.get('/special/', function(req, res, next) {
-	console.log("in the special route");
-	res.send("Welcome to special twitter :)");
-})
 
-app.use('/',router);
+app.use('/', routes);
+
