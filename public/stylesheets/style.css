@@ -24,6 +24,9 @@ body {
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
+li {
+  list-style-type: none;
+}
 
 #wrap > .container {
   padding: 60px 15px 0;
@@ -57,3 +60,9 @@ code {
 .content .by {
   font-weight: bold;
 }
+
+ .name {
+  font-weight: bold;
+}
+
+
