@@ -1,18 +1,23 @@
 const _ = require('lodash');
 
 var data = [];
+var idCount = 1;
 
 function add (name, content) {
-	data.push({ name: name, content: content });
-};
+	data.push({
+    name: name,
+    content: content,
+    uniqueID: idCount++
+  })
+}
 
 function list() {
 	return _.cloneDeep(data);
-};
+}
 
 function find(properties) {
 	return _.cloneDeep(_.filter(data, properties));
-};
+}
 
 module.exports = {
 	add: add,
@@ -39,7 +44,7 @@ for (let i = 0; i < 10; i++) {
   module.exports.add( getFakeName(), getFakeTweet() );
 }
 
-
+data.push({name: "Pat Hoyt", content:"blahhhhh", uniqueID: 123});
 
 
 
